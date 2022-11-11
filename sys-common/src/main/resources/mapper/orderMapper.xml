@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.common.dao.OrderDao">
+    <select id="getOrders" resultType="com.example.common.vo.OrderVo">
+        select o.*,
+               g.intro           goodIntro,
+               g.celebrity_price payment,
+               g.name            goodName,
+               g.type            goodType,
+               u1.real_name      seller,
+               g.img             goodImg,
+               g.intro           goodName,
+               g.good_id         goodId,
+               u2.real_name      celebrityName,
+               a1.human          consignor,
+               a2.human          consignee
+        from tb_order o
+                 left join users u1 on o.eshop = u1.account
+                 left join users u2 on o.celebrity = u2.account
+                 left join goods g on o.id = g.good_id
+                 left join address a1 on o.deliver_address = a1.address_id
+                 left join address a2 on o.receive_address = a2.address_id
+        where o.celebrity = #{account}
+          and o.status = #{status}
+        order by o.status, o.pay_time desc
+        limit #{start}, 10;
+    </select>
+
+    <select id="getAllOrders" resultType="com.example.common.vo.OrderVo">
+        select o.*,
+               g.intro           goodIntro,
+               g.celebrity_price payment,
+               g.name            goodName,
+               g.type            goodType,
+               u1.real_name      seller,
+               g.img             goodImg,
+               g.intro           goodName,
+               g.good_id         goodId,
+               u2.real_name      celebrityName,
+               a1.human          consignor,
+               a2.human          consignee
+        from tb_order o
+                 left join users u1 on o.eshop = u1.account
+                 left join users u2 on o.celebrity = u2.account
+                 left join goods g on o.id = g.good_id
+                 left join address a1 on o.deliver_address = a1.address_id
+                 left join address a2 on o.receive_address = a2.address_id
+        where o.celebrity = #{account}
+          and o.status != 7
+        order by o.status, o.pay_time desc
+        limit #{start}, 10;
+    </select>
+</mapper>

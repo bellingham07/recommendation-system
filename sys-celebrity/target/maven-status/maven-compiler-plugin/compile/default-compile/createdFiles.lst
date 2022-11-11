@@ -1,0 +1,9 @@
+com\example\celebrity\controller\FindEShopsController.class
+com\example\celebrity\CelebrityApplication.class
+com\example\celebrity\controller\CIndexController.class
+com\example\celebrity\controller\CAccountController.class
+com\example\celebrity\controller\CRecommendController.class
+com\example\celebrity\controller\GoodsRecommendController.class
+com\example\celebrity\controller\OrderController.class
+com\example\celebrity\controller\SelfInfoController.class
+com\example\celebrity\controller\CContractController.class

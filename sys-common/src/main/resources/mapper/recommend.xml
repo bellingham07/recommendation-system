@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.common.dao.RecommendDao">
+    <insert id="save">
+        insert into recommend (account)
+        values (#{account})
+    </insert>
+
+    <select id="getRecommend" resultType="com.example.common.entity.Recommend">
+        select *
+        from recommend
+        where account = #{account}
+    </select>
+
+    <update id="saveRecommend" parameterType="com.example.common.entity.Recommend">
+        update recommend
+        set re1=#{recommend.re1},
+            re2=#{recommend.re2},
+            re3=#{recommend.re3},
+            re4=#{recommend.re4},
+            re5=#{recommend.re5},
+            re6=#{recommend.re6}
+        where account = #{recommend.account}
+    </update>
+</mapper>
