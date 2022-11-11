@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sys-celebrity" />
         <module name="sys-eshop-backend" />
-        <module name="System" />
         <module name="sys-common" />
         <module name="sys-eshop-front" />
         <module name="sys-backend" />

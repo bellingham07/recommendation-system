@@ -2,7 +2,6 @@ package com.example.celebrity.controller;
 
 import com.example.common.dto.AddressDto;
 import com.example.common.entity.Address;
-import com.example.common.entity.User;
 import com.example.common.response.Result;
 import com.example.common.service.AddressService;
 import com.example.common.service.UserService;

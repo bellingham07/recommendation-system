@@ -9,7 +9,6 @@ import com.example.common.dto.LoginDto;
 import com.example.common.dto.PasswordDto;
 import com.example.common.dto.UserDto;
 import com.example.common.dto.ValidateDto;
-import com.example.common.entity.User;
 import com.example.common.response.Result;
 import com.example.common.service.UserService;
 import com.example.common.utils.oss.OssUtil;

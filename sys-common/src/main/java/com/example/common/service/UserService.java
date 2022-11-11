@@ -2,12 +2,9 @@ package com.example.common.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.common.dto.PasswordDto;
-import com.example.common.entity.User;
 import com.example.common.response.Result;
 import com.example.common.dto.LoginDto;
-import com.example.common.dto.PasswordDto;
 import com.example.common.dto.ValidateDto;
-import com.example.common.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;

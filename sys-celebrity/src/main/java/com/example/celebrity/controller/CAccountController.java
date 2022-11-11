@@ -1,7 +1,6 @@
 package com.example.celebrity.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.example.common.entity.User;
 import com.example.common.service.UserService;
 import com.example.common.utils.oss.OssUtil;
 import com.example.common.response.Result;

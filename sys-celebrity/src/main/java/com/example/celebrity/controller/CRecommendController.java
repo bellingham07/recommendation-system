@@ -2,7 +2,6 @@ package com.example.celebrity.controller;
 
 
 import com.example.common.entity.Recommend;
-import com.example.common.entity.User;
 import com.example.common.entity.UserBehavior;
 import com.example.common.service.GoodService;
 import com.example.common.service.RecommendService;
