@@ -11,8 +11,8 @@
     <file url="file://$PROJECT_DIR$/sys-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sys-eshop-backend/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sys-eshop-backend/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sys-eshop-front/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sys-eshop-front/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sys-eshop/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sys-eshop/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

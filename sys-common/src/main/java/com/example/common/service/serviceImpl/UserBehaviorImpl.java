@@ -1,6 +1,5 @@
 package com.example.common.service.serviceImpl;
 
-import com.example.common.dao.UserBehaviorDao;
 import com.example.common.entity.UserBehavior;
 import com.example.common.service.UserBehaviorService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package com.example.common.response;
 
-import com.example.common.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,41 +10,41 @@ import static com.example.common.utils.constant.SystemConstant.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Result<T> {
+public class Result {
     private Integer code;
 
     private String msg;
 
-    private T data;
+    private Object data;
 
     public static Result success() {
         Result r = new Result();
         r.data = null;
-        r.code = SUCCESS_CODE;
-        r.msg = SUCCESS_OPERATE;
+        r.code = CODE_SUCCESS;
+        r.msg = OPERATE_SUCCESS;
         return r;
     }
 
     public static Result success(String msg) {
-        Result<Address> r = new Result();
+        Result r = new Result();
         r.data = null;
-        r.code = SUCCESS_CODE;
+        r.code = CODE_SUCCESS;
         r.msg = msg;
         return r;
     }
 
-    public static <T> Result success(T data) {
+    public static Result success(Object data) {
         Result r = new Result();
         r.data = data;
-        r.code = SUCCESS_CODE;
-        r.msg = SUCCESS_OPERATE;
+        r.code = CODE_SUCCESS;
+        r.msg = OPERATE_SUCCESS;
         return r;
     }
 
-    public static <T> Result success(String msg, T data) {
+    public static Result success(String msg, Object data) {
         Result r = new Result();
         r.data = data;
-        r.code = SUCCESS_CODE;
+        r.code = CODE_SUCCESS;
         r.msg = msg;
         return r;
     }
@@ -53,15 +52,15 @@ public class Result<T> {
     public static Result error() {
         Result r = new Result();
         r.data = null;
-        r.code = ERROR_CODE;
-        r.msg = FAIL_OPERATE;
+        r.code = CODE_ERROR;
+        r.msg = OPERATE_FAIL;
         return r;
     }
 
-    public static <T> Result error(String msg) {
+    public static Result error(String msg) {
         Result r = new Result();
         r.data = null;
-        r.code = ERROR_CODE;
+        r.code = CODE_ERROR;
         r.msg = msg;
         return r;
     }
@@ -70,26 +69,26 @@ public class Result<T> {
         Result r = new Result();
         r.data = null;
         if (success) {
-            r.msg = SUCCESS_OPERATE;
-            r.code = SUCCESS_CODE;
+            r.msg = OPERATE_SUCCESS;
+            r.code = CODE_SUCCESS;
             return r;
         }
-        r.msg = FAIL_OPERATE;
-        r.code = ERROR_CODE;
+        r.msg = OPERATE_FAIL;
+        r.code = CODE_ERROR;
         return r;
     }
 
-    public static <T> Result test(T data) {
+    public static Result test(Object data) {
         Result r = new Result();
         if (data != null) {
-            r.msg = SUCCESS_OPERATE;
-            r.code = SUCCESS_CODE;
+            r.msg = OPERATE_SUCCESS;
+            r.code = CODE_SUCCESS;
             r.data = data;
             return r;
         }
         r.data = null;
-        r.msg = FAIL_OPERATE;
-        r.code = ERROR_CODE;
+        r.msg = OPERATE_FAIL;
+        r.code = CODE_ERROR;
         return r;
     }
 }

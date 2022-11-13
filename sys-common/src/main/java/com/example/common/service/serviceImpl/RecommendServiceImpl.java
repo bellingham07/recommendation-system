@@ -1,7 +1,6 @@
 package com.example.common.service.serviceImpl;
 
 
-import com.example.common.dao.RecommendDao;
 import com.example.common.entity.Recommend;
 import com.example.common.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;

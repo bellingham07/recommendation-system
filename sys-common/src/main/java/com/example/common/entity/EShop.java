@@ -1,14 +1,18 @@
 package com.example.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EShop {
+@TableName("tb_eshop")
+public class EShop implements Serializable {
 
     @TableId(value = "id")
     private Long id;

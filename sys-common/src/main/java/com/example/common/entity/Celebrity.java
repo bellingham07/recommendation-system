@@ -1,14 +1,18 @@
 package com.example.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Celebrity {
+@TableName("tb_celebrity")
+public class Celebrity implements Serializable {
 
     @TableId(value = "id")
     private Long id;
@@ -22,7 +26,7 @@ public class Celebrity {
     private String email;
     private String avatar;
     private String intro;
-    private String realName;
+    private String realname;
     private String platform;
     private String platformUrl;
     private Integer category;

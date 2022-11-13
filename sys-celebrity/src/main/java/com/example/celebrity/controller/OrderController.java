@@ -2,71 +2,74 @@ package com.example.celebrity.controller;
 
 import com.example.common.dto.OrderDto;
 import com.example.common.response.Result;
-import com.example.common.service.AddressService;
 import com.example.common.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.common.utils.constant.SystemConstant.*;
-
-
 @Controller
-@RequestMapping("celebrity/order")
+@RequestMapping("order")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private AddressService addressService;
+    // TODO 获取订单列表（根据状态）
+    @GetMapping("list/{status}")
+    public Result list(@PathVariable("status") Integer status) {
+        return orderService.listOrders(status);
+    }
 
+    // TODO 获取单条
+    @GetMapping("{id}")
+    public Result getOne(@PathVariable("id") Long id) {
+        return Result.test(orderService.getById(id));
+    }
+
+    @PostMapping
+    public Result makeOrder(OrderDto orderDto) {
+        return orderService.makeOrder(orderDto);
+    }
 
     // 加入购物车
     @GetMapping("cart/{id}")
-    public Result cart(@PathVariable("id") Integer goodId) {
+    public Result save2cart(@PathVariable("id") Long goodId) {
         return orderService.save2cart(goodId);
     }
 
-    // 从购物车购买
-    @PutMapping("cart/{id}")
-    public Result buyFromCart(@PathVariable("id") Integer orderId) {
-        return orderService.buyFromCart(orderId);
-    }
-
-    // 直接购买
-    @PostMapping("buy")
-    public Result buy(OrderDto orderDto) {
-        return orderService.buy(orderDto);
-    }
-
-    // 收货
-    @GetMapping("{id}")
-    public Result receiveCheck(@PathVariable("id") Integer id) {
-        return orderService.updateStatus(id, ORDER_STATUS_COMPLETE);
+    // 购买
+    @GetMapping("buy/{id}")
+    public Result buy(@PathVariable("id") Long id) {
+        return orderService.buy(id);
     }
 
     // 取消订单
-    @PutMapping("{id}")
-    public Result cancel(@PathVariable("id") Integer id) {
-        return orderService.cancelOrder(id);
+    @PutMapping("operate/{id}")
+    public Result cancel(@PathVariable("id") Long id) {
+        return orderService.cancelByC(id);
     }
 
-    // TODO 单条订单删除，购物车移除（网红逻辑删除）
-    @DeleteMapping("{id}")
-    public Result removeSingle(@PathVariable("id") Integer id) {
-        return null;
+    // TODO 收货
+    @GetMapping("operate/{id}")
+    public Result takeCheck(@PathVariable("id") Long id) {
+        return orderService.takeCheck(id);
     }
 
-    // TODO 批量订单删除，购物车移除（网红逻辑删除）
-    @PostMapping("remove")
+    // TODO 发起退款
+    @PutMapping("operate/refund/{id}")
+    public Result refund(@PathVariable("id") Long id) {
+        return orderService.refund(id);
+    }
+
+    // 单条订单删除，购物车移除
+    @DeleteMapping("operate/{id}")
+    public Result removeSingle(@PathVariable("id") Long id) {
+        return Result.test(orderService.removeById(id));
+    }
+
+    // TODO 批量订单删除，购物车移除
+    @PostMapping("operate/remove")
     public Result removeBatch() {
-        return null;
-    }
-
-    // TODO 加载收货地址
-    @GetMapping("address")
-    public Result listAddress() {
-        return addressService.listAddress();
+        return orderService.removeBatch();
     }
 }

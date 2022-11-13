@@ -10,17 +10,6 @@ import java.util.List;
 
 public interface ContractService extends IService<Contract> {
 
-//    获取网红用户的代言签约合同
-    List<ContractVo> getContractsByCelebrity(String account);
-
-    List<ContractVo> getContractsCelebrity(String account, Integer start, Integer status);
-
-    List<ContractVo> getContractsEshop(String account, Integer start, Integer status);
-
-    int insertContract(Contract contract);
-
-    Result cancelContract(Integer id);
-
     Result removeSingle(Integer id);
 
     Result applyC2E(ContractDto contractDto);
@@ -29,5 +18,17 @@ public interface ContractService extends IService<Contract> {
 
     Result listContracts(Integer status);
 
-    Result acceptContract(Integer id);
+    Result accept(Integer id);
+
+    Result cancelByC(Integer id);
+
+    Result cancelApproveByC(Integer id);
+
+    Result cancelRefuseByC(Integer id);
+
+    Result cancelApproveByE(Integer id);
+
+    Result cancelRefuseByE(Integer id);
+
+    Result cancelByE(Integer id);
 }

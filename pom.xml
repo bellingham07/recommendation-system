@@ -11,8 +11,7 @@
 
     <modules>
         <module>sys-celebrity</module>
-        <module>sys-eshop-front</module>
-        <module>sys-eshop-backend</module>
+        <module>sys-eshop</module>
         <module>sys-common</module>
         <module>sys-backend</module>
     </modules>

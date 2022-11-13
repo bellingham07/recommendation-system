@@ -12,10 +12,10 @@
                u1.real_name seller,
                g.img        goodImg,
                g.brand      brand
-        from contract c
-                 left join users u1 on c.eshop = u1.account
-                 left join users u2 on c.celebrity = u2.account
-                 left join goods g on c.good = g.good_id
+        from tb_contract c
+                 left join tb_user u1 on c.eshop = u1.account
+                 left join tb_user u2 on c.celebrity = u2.account
+                 left join tb_good g on c.good = g.good_id
         where c.eshop = #{account}
           and c.status = #{status}
         order by c.status, c.start_time desc
@@ -31,10 +31,10 @@
                u1.real_name seller,
                g.img        goodImg,
                g.brand      brand
-        from contract c
-                 left join users u1 on c.eshop = u1.account
-                 left join users u2 on c.celebrity = u2.account
-                 left join goods g on c.good = g.good_id
+        from tb_contract c
+                 left join tb_users u1 on c.eshop = u1.account
+                 left join tb_users u2 on c.celebrity = u2.account
+                 left join tb_goods g on c.good = g.good_id
         where c.eshop = #{account}
         order by c.status, c.start_time desc
         limit #{start}, 10;
@@ -49,10 +49,10 @@
                u1.real_name seller,
                g.img        goodImg,
                g.brand      brand
-        from contract c
-                 left join users u1 on c.eshop = u1.account
-                 left join users u2 on c.celebrity = u2.account
-                 left join goods g on c.good = g.good_id
+        from tb_contract c
+                 left join tb_user u1 on c.eshop = u1.account
+                 left join tb_user u2 on c.celebrity = u2.account
+                 left join tb_good g on c.good = g.good_id
         where c.celebrity = #{account}
           and c.status = #{status}
         order by c.status, c.start_time desc
@@ -68,17 +68,17 @@
                u1.real_name seller,
                g.img        goodImg,
                g.brand      brand
-        from contract c
-                 left join users u1 on c.eshop = u1.account
-                 left join users u2 on c.celebrity = u2.account
-                 left join goods g on c.id = g.good_id
+        from tb_contract c
+                 left join tb_user u1 on c.eshop = u1.account
+                 left join tb_user u2 on c.celebrity = u2.account
+                 left join tb_good g on c.id = g.good_id
         where c.celebrity = #{account}
         order by c.status, c.start_time desc
         limit #{start}, 10;
     </select>
 
     <insert id="insertContract">
-        insert into contract (celebrity, eshop, start_time, end_time, status)
+        insert into tb_contract (celebrity, eshop, start_time, end_time, status)
         values (#{celebrity}, #{eshop}, #{startDay}, #{lasting}, #{status})
     </insert>
 </mapper>

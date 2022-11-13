@@ -9,5 +9,4 @@ import java.util.List;
 
 @Mapper
 public interface AddressDao extends BaseMapper<Address> {
-    List<Address> findAddress(@Param("account") String account, @Param("current") Integer current);
 }

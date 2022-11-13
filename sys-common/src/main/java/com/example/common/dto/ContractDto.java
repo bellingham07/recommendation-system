@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContractDto {
-    private Integer good;
+    private Long good;
     private String startTime;
     private String endTime;
 }
