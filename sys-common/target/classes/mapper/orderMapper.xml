@@ -17,11 +17,11 @@
                a1.human          consignor,
                a2.human          consignee
         from tb_order o
-                 left join users u1 on o.eshop = u1.account
-                 left join users u2 on o.celebrity = u2.account
-                 left join goods g on o.id = g.good_id
-                 left join address a1 on o.deliver_address = a1.address_id
-                 left join address a2 on o.receive_address = a2.address_id
+                 left join tb_celebrity u1 on o.eshop = u1.id
+                 left join tb_eshop u2 on o.celebrity = u2.id
+                 left join tb_good g on o.id = g.id
+                 left join tb_address a1 on o.deliver_address = a1.address_id
+                 left join tb_address a2 on o.receive_address = a2.address_id
         where o.celebrity = #{account}
           and o.status = #{status}
         order by o.status, o.pay_time desc
@@ -42,11 +42,11 @@
                a1.human          consignor,
                a2.human          consignee
         from tb_order o
-                 left join users u1 on o.eshop = u1.account
-                 left join users u2 on o.celebrity = u2.account
-                 left join goods g on o.id = g.good_id
-                 left join address a1 on o.deliver_address = a1.address_id
-                 left join address a2 on o.receive_address = a2.address_id
+                 left join tb_celebrity u1 on o.eshop = u1.id
+                 left join tb_eshop u2 on o.celebrity = u2.id
+                 left join tb_good g on o.id = g.id
+                 left join tb_address a1 on o.deliver_address = a1.address_id
+                 left join tb_address a2 on o.receive_address = a2.address_id
         where o.celebrity = #{account}
           and o.status != 7
         order by o.status, o.pay_time desc

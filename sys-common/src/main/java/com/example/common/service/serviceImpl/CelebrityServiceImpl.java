@@ -8,13 +8,14 @@ import com.example.common.dto.PasswordDto;
 import com.example.common.dto.ValidateDto;
 import com.example.common.entity.Celebrity;
 import com.example.common.response.Result;
-import com.example.common.service.UserService;
+import com.example.common.service.CelebrityService;
 import com.example.common.utils.oss.OssUtil;
 import com.example.common.utils.threadHolder.CelebrityHolder;
 import com.example.common.utils.cache.RedisClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,7 +24,7 @@ import static com.example.common.utils.constant.SystemConstant.OPERATE_SUCCESS;
 
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> implements UserService {
+public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> implements CelebrityService {
 
     @Autowired
     private OssUtil ossUtil;
@@ -61,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> implem
         }
         boolean success = update()
                 .set("password", StrUtil.trim(passwordDto.getPassword2()))
-                .eq("account", CelebrityHolder.getUser().getAccount())
+                .eq("account", CelebrityHolder.getUser().getId())
                 .update();
         if (!success) return Result.error(OPERATE_FAIL);
         return Result.success(OPERATE_SUCCESS);
@@ -75,5 +76,15 @@ public class UserServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> implem
                 .one();
         if (celebrity == null) return Result.error("账号或手机号有误！");
         return Result.success(OPERATE_SUCCESS);
+    }
+
+    @Override
+    public Result updateInfo(Celebrity celebrity) {
+        return null;
+    }
+
+    @Override
+    public Result updateAvatar(MultipartFile avatar) {
+        return null;
     }
 }

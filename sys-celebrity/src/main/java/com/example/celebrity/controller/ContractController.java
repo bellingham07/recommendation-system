@@ -3,11 +3,13 @@ package com.example.celebrity.controller;
 import com.example.common.dto.ContractDto;
 import com.example.common.response.Result;
 import com.example.common.service.ContractService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("contract")
+@Api(tags = "合约相关controller")
 public class ContractController {
 
     @Autowired

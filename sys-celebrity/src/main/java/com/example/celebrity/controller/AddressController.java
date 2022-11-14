@@ -3,11 +3,13 @@ package com.example.celebrity.controller;
 import com.example.common.dto.AddressDto;
 import com.example.common.response.Result;
 import com.example.common.service.AddressService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("address")
+@Api(tags = "地址相关controller")
 public class AddressController {
 
     @Autowired

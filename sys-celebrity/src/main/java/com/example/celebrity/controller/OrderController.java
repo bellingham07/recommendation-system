@@ -3,12 +3,14 @@ package com.example.celebrity.controller;
 import com.example.common.dto.OrderDto;
 import com.example.common.response.Result;
 import com.example.common.service.OrderService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("order")
+@Api(tags = "订单相关controller")
 public class OrderController {
 
     @Autowired

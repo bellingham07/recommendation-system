@@ -2,6 +2,12 @@ server:
   port: 8800
 
 spring:
+  application:
+    name: sys-celebrity
+
+  profiles:
+    active: dev
+
   datasource:
     username: schoolHW
     password: hxajsWGfc6amwf52
@@ -13,6 +19,16 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
+  redis:
+    host: 43.143.241.157
+    port: 6379
+    password: 123456
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 1
+        time-between-eviction-runs: 10s
 
 mybatis-plus:
   configuration:
@@ -20,12 +36,6 @@ mybatis-plus:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#  # 搜索指定包别名
-#  typeAliasesPackage: com.example.common
-#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
-#  mapperLocations: classpath*:mapper/*.xml
-
-
 #  global-config:
 #    db-config:
 #      logic-delete-field: delFlag
