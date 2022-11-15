@@ -68,4 +68,8 @@ public class RedisClient {
     public void expire(String key, Long ttl, TimeUnit unit) {
         stringRedisTemplate.expire(key, ttl, unit);
     }
+
+    public void removeCache(String key) {
+        stringRedisTemplate.delete(key);
+    }
 }

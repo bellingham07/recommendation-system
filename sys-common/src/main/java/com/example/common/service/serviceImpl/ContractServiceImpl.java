@@ -4,17 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.ContractDao;
 import com.example.common.dto.ContractDto;
-import com.example.common.dto.UserDto;
 import com.example.common.entity.Contract;
+import com.example.common.entity.LoginCelebrity;
+import com.example.common.entity.LoginEShop;
 import com.example.common.response.Result;
 import com.example.common.service.ContractService;
-import com.example.common.utils.threadHolder.CelebrityHolder;
-import com.example.common.vo.ContractVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Objects;
 
 import static com.example.common.utils.constant.SystemConstant.*;
@@ -84,7 +83,8 @@ public class ContractServiceImpl extends ServiceImpl<ContractDao, Contract> impl
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Contract contract = BeanUtil.copyProperties(contractDto, Contract.class);
         contract.setGood(contractDto.getGood());
-        contract.setCelebrity(CelebrityHolder.getUser().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        contract.setCelebrity(((LoginCelebrity) authentication.getPrincipal()).getCelebrity().getId());
         contract.setStartTime(sdf.format(contractDto.getStartTime()));
         contract.setEndTime(contractDto.getEndTime());
         contract.setStatus(CONTRACT_STATUS_C2E);
@@ -97,7 +97,8 @@ public class ContractServiceImpl extends ServiceImpl<ContractDao, Contract> impl
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Contract contract = BeanUtil.copyProperties(contractDto, Contract.class);
         contract.setGood(contractDto.getGood());
-        contract.setEshop(CelebrityHolder.getUser().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        contract.setEshop(((LoginEShop) authentication.getPrincipal()).getEShop().getId());
         contract.setStartTime(sdf.format(contractDto.getStartTime()));
         contract.setEndTime(contractDto.getEndTime());
         contract.setStatus(CONTRACT_STATUS_E2C);

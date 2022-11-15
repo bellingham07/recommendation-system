@@ -1,9 +1,9 @@
-com\example\celebrity\controller\FindEShopsController.class
 com\example\celebrity\CelebrityApplication.class
-com\example\celebrity\controller\CIndexController.class
-com\example\celebrity\controller\CAccountController.class
-com\example\celebrity\controller\CRecommendController.class
-com\example\celebrity\controller\GoodsRecommendController.class
+com\example\celebrity\controller\InfoController.class
+com\example\celebrity\controller\ContractController.class
+com\example\celebrity\controller\LoginController.class
+com\example\celebrity\controller\AddressController.class
+com\example\celebrity\config\SwaggerConfig.class
 com\example\celebrity\controller\OrderController.class
-com\example\celebrity\controller\SelfInfoController.class
-com\example\celebrity\controller\CContractController.class
+com\example\celebrity\config\SecurityConfig.class
+com\example\celebrity\filter\JwtAuthenticationTokenFilter.class

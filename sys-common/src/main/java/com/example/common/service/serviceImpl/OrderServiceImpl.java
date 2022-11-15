@@ -4,18 +4,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.GoodDao;
 import com.example.common.dao.OrderDao;
 import com.example.common.dto.OrderDto;
+import com.example.common.entity.LoginCelebrity;
+import com.example.common.entity.LoginEShop;
 import com.example.common.entity.Order;
 import com.example.common.response.Result;
 import com.example.common.service.OrderService;
-import com.example.common.utils.threadHolder.CelebrityHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
-import static com.example.common.utils.constant.SystemConstant.*;
+import static com.example.common.utils.constant.SystemConstant.ORDER_STATUS_CART;
+import static com.example.common.utils.constant.SystemConstant.ORDER_STATUS_PAYED;
 
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements OrderService {
@@ -35,7 +38,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
         Order order = new Order();
         order.setId(id);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        order.setCelebrity(CelebrityHolder.getUser().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        order.setCelebrity(((LoginCelebrity) authentication.getPrincipal()).getCelebrity().getId());
         order.setEshop(goodDao.selectById(order.getGood()).getEshop());
         order.setPayTime(sdf.format(new Date()));
         order.setStatus(ORDER_STATUS_PAYED);
@@ -46,7 +50,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
     public Result save2cart(Long goodId) {
         Order order = new Order();
         order.setGood(goodId);
-        order.setCelebrity(CelebrityHolder.getUser().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        order.setCelebrity(((LoginCelebrity) authentication.getPrincipal()).getCelebrity().getId());
         order.setStatus(ORDER_STATUS_CART);
         order.setEshop(goodDao.selectById(goodId).getEshop());
         return Result.test(save(order));

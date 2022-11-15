@@ -10,11 +10,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
@@ -22,29 +30,45 @@ public class SecurityConfig {
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
 
-    // 新版spring-security不再需要继承WebSecurityConfigurerAdapter，直接注入AuthenticationConfiguration
-    // 再调用getAuthenticationManager获取AuthenticationManager从而注入进IOC中
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    // 将passwordEncoder配置为BCryptPasswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/user/login").anonymous()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+         http
+                 //关闭csrf
+                 .csrf().disable()
+                 .cors()
+                 .and()
+                 //不通过Session获取SecurityContext
+                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                 .and()
+                 .authorizeRequests()
+                 // 登录接口，允许匿名访问
+                 .antMatchers("/login").anonymous()
+                 .antMatchers("/logout").authenticated()
+                 .antMatchers("/info").authenticated()
+                 .antMatchers("/order").authenticated()
+                 .antMatchers("/contract").authenticated()
+                 .antMatchers("/address").authenticated()
+                 .anyRequest().permitAll();
+
+         http
+                 .exceptionHandling()
+                 .authenticationEntryPoint(authenticationEntryPoint)
+                 .accessDeniedHandler(accessDeniedHandler);
+
+         // 把jwt过滤器放在security的upaf过滤器之前执行
+         http
+                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+         return http.build();
     }
 }

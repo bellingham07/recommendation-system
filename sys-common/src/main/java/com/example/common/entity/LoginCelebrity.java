@@ -1,6 +1,5 @@
-package com.example.celebrity.dto;
+package com.example.common.entity;
 
-import com.example.common.entity.Celebrity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

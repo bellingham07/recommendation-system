@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.AddressDao;
 import com.example.common.dto.AddressDto;
 import com.example.common.entity.Address;
+import com.example.common.entity.Celebrity;
+import com.example.common.entity.LoginCelebrity;
 import com.example.common.response.Result;
 import com.example.common.service.AddressService;
 import com.example.common.utils.bean.BeanCopyUtils;
-import com.example.common.utils.threadHolder.CelebrityHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +27,8 @@ public class AddressServiceImpl extends ServiceImpl<AddressDao, Address> impleme
         // 2.dto转实体类
         Address address = BeanCopyUtils.copy(addressDto, Address.class);
         // 3.设置发货人
-        address.setUser(CelebrityHolder.getUser().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        address.setUser(((LoginCelebrity) authentication.getPrincipal()).getCelebrity().getId());
         // 4.保存
         return Result.test(save(address));
     }
