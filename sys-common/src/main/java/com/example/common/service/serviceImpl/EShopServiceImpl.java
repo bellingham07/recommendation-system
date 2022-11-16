@@ -6,7 +6,7 @@ import com.example.common.dto.LoginDto;
 import com.example.common.entity.EShop;
 import com.example.common.response.Result;
 import com.example.common.service.EShopService;
-import com.example.common.utils.cache.RedisClient;
+import com.example.common.utils.cache.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class EShopServiceImpl extends ServiceImpl<EShopDao, EShop> implements EShopService {
 
     @Autowired
-    private RedisClient redisClient;
+    private RedisCache redisCache;
 
     @Override
     public Result login(LoginDto loginDto) {

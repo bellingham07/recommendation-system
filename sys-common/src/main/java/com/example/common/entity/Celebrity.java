@@ -30,5 +30,5 @@ public class Celebrity implements Serializable {
     private String platformUrl;
     private Integer category;
     private Integer creditPoint;
-    private Integer like;
+    private Integer likes;
 }

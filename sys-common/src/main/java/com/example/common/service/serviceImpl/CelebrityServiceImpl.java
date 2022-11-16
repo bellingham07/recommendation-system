@@ -13,7 +13,7 @@ import com.example.common.response.Result;
 import com.example.common.service.CelebrityService;
 import com.example.common.utils.JwtUtil;
 import com.example.common.utils.bean.BeanCopyUtils;
-import com.example.common.utils.cache.RedisClient;
+import com.example.common.utils.cache.RedisCache;
 import com.example.common.utils.oss.OssUtil;
 import com.example.common.vo.UserInfoVo;
 import com.example.common.vo.UserLoginVo;
@@ -41,7 +41,7 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private RedisClient redisClient;
+    private RedisCache redisCache;
 
     @Override
     public Result login(LoginDto loginDto) {
@@ -57,7 +57,7 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         String id = loginCelebrity.getCelebrity().getId().toString();
         String jwt = JwtUtil.createJWT(id);
         // 4.把用户信息存入redis
-        redisClient.setMapCache(CELEBRITY_LOGIN_KEY + id, loginCelebrity);
+        redisCache.setMapCache(CELEBRITY_LOGIN_KEY + id, loginCelebrity);
         // 5.把token和CelebrityInfo封装到CelebrityLoginVo中返回
         // 5.1.把Celebrity转换为CelebrityInfoVo
         UserInfoVo userInfoVo = BeanCopyUtils.copy(loginCelebrity.getCelebrity(), UserInfoVo.class);
@@ -73,7 +73,7 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         // 2.获取id
         Long id = loginCelebrity.getCelebrity().getId();
         // 3.删除redis中的用户信息
-        redisClient.removeCache(CELEBRITY_LOGIN_KEY + id);
+        redisCache.removeCache(CELEBRITY_LOGIN_KEY + id);
         return null;
     }
 

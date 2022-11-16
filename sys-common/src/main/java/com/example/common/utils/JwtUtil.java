@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -106,9 +107,9 @@ public class JwtUtil {
                 .getBody();
     }
 
-
     public static void main(String[] args) {
-        String xiaopang = createJWT("xiaopang");
-        System.out.println(xiaopang);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encode = encoder.encode("1");
+        System.out.println(encode);
     }
 }

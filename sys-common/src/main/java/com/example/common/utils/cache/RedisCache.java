@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class RedisClient {
+public class RedisCache {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;

@@ -5,9 +5,6 @@ spring:
   application:
     name: sys-eshop
 
-  profiles:
-    active: dev
-
   datasource:
     username: schoolHW
     password: hxajsWGfc6amwf52

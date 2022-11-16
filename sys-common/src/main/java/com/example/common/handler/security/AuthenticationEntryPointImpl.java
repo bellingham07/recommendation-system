@@ -1,6 +1,6 @@
 package com.example.common.handler.security;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSONUtil;
 import com.example.common.response.Result;
 import com.example.common.utils.WebUtils;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +29,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
             result = Result.error(AUTHENTICATION_OR_AUTHORIZATION_FAIL);
         }
         //响应给前端
-        WebUtils.renderString(httpServletResponse, JSON.toJSONString(result));
+        WebUtils.renderString(httpServletResponse, JSONUtil.toJsonStr(result));
     }
 }

@@ -1,7 +1,7 @@
 package com.example.common.service.serviceImpl.security;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.common.dao.CelebrityDao;
 import com.example.common.entity.Celebrity;
 import com.example.common.entity.LoginCelebrity;
@@ -22,9 +22,9 @@ public class CelebrityDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 1.根据账号密码查询用户是否存在
-        Celebrity celebrity = celebrityDao.selectOne(new QueryChainWrapper<>(celebrityDao)
-                .eq("username", username)
-                .select());
+        LambdaQueryWrapper<Celebrity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Celebrity::getUsername, username);
+        Celebrity celebrity = celebrityDao.selectOne(queryWrapper);
         if (ObjectUtil.isNull(celebrity)) {
             throw new RuntimeException(LOGIN_NO_EXIST);
         }

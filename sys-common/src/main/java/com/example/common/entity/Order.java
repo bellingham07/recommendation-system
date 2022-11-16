@@ -18,7 +18,7 @@ public class Order implements Serializable {
     private Long id; // 订单编号
     private Long eshop; // 发货商家的account
     private Long celebrity; // 收货网红的account
-    private Long deliverAddress; // 发货地址id
+    private Long consignAddress; // 发货地址id
     private Long receiveAddress; // 收货地址id
     private Long good; // 商品
     private String remark; // 订单备注

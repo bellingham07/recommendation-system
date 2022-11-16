@@ -1,6 +1,6 @@
 package com.example.common.handler.security;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSONUtil;
 import com.example.common.response.Result;
 import com.example.common.utils.WebUtils;
 import org.springframework.security.access.AccessDeniedException;
@@ -22,6 +22,6 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
         e.printStackTrace();
         Result result = Result.error(NO_OPERATOR_AUTH);
         //响应给前端
-        WebUtils.renderString(httpServletResponse, JSON.toJSONString(result));
+        WebUtils.renderString(httpServletResponse, JSONUtil.toJsonStr(result));
     }
 }
