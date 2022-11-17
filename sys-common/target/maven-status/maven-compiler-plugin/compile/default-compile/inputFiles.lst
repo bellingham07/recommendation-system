@@ -30,7 +30,6 @@ D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\entity\UserBehavior.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\service\serviceImpl\GoodTypeServiceImpl.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\utils\bean\BeanCopyUtils.java
-D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\utils\cache\RedisClient.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\utils\constant\RedisConstant.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\entity\Celebrity.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\service\serviceImpl\GoodServiceImpl.java
@@ -51,6 +50,7 @@ D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\handler\mybatisPlus\MybatisPlusHandler.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\service\CelebrityService.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\vo\UserLoginVo.java
+D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\utils\cache\RedisCache.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\dto\LoginDto.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\dto\UserDto.java
 D:\JAVA\java program\recommendation-system\sys-common\src\main\java\com\example\common\entity\EShop.java

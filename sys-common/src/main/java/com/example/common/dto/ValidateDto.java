@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValidateDto {
-    private String account;
+    private Long id;
+    private String phonenumber;
     private String tel;
 }

@@ -1,6 +1,6 @@
-package com.example.celebrity.config;
+package com.example.eshop.config;
 
-import com.example.celebrity.filter.JwtAuthenticationTokenFilter;
+import com.example.eshop.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -31,14 +31,14 @@ public class SecurityConfig {
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Autowired
-    @Qualifier("celebrityUserDetailsService")
-    private UserDetailsService celebrityDetailsService;
+    @Qualifier("eshopUserDetailsService")
+    private UserDetailsService eshopUserDetailsService;
 
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(celebrityDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(eshopUserDetailsService);
         return new ProviderManager(daoAuthenticationProvider);
     }
 

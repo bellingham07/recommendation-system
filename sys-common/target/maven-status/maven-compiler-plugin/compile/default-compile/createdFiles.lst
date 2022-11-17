@@ -42,7 +42,6 @@ com\example\common\utils\constant\SystemConstant.class
 com\example\common\service\serviceImpl\GoodTypeServiceImpl.class
 com\example\common\entity\Address.class
 com\example\common\service\AddressService.class
-com\example\common\utils\cache\RedisClient.class
 com\example\common\entity\Celebrity.class
 com\example\common\dao\CelebrityDao.class
 com\example\common\dao\ContractDao.class
@@ -60,6 +59,7 @@ com\example\common\entity\LoginCelebrity.class
 com\example\common\entity\UserBehavior.class
 com\example\common\entity\EShop.class
 com\example\common\service\GoodService.class
+com\example\common\utils\cache\RedisCache.class
 com\example\common\handler\security\AccessDeniedHandlerImpl.class
 com\example\common\service\GoodTypeService.class
 com\example\common\utils\bean\BeanCopyUtils.class

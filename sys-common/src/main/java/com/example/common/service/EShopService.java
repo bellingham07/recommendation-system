@@ -8,4 +8,6 @@ import com.example.common.response.Result;
 public interface EShopService extends IService<EShop> {
 
     Result login(LoginDto loginDto);
+
+    Result logout();
 }

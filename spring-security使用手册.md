@@ -28,13 +28,32 @@
 
 ## 1.SecurityConfig配置类
 
-新版spring-security不再需要继承WebSecurityConfigurerAdapter，需要的AuthenticationManager不再需要通过重写来注入bean，直接注入AuthenticationConfiguration，再调用getAuthenticationManager获取AuthenticationManager从而注入进IOC中
+新版spring-security不再需要继承WebSecurityConfigurerAdapter，需要的AuthenticationManager不再需要通过重写来注入bean，
+直接注入AuthenticationConfiguration，再调用getAuthenticationManager获取AuthenticationManager从而注入进IOC中
 
-我们使用BCryptPasswordEncoder给密码加密
+当然这里默认是注入了AuthenticationManager就行了。因为他是一个接口，所以实际IOC会调用他的实现类去走authenticate方法，这个实现类就是ProviderManager
 
-都将他们注入IOC中
+ProviderManager管理了一个AuthenticationProvider列表，每个AuthenticationProvider都是一个认证器，
+不同的 AuthenticationProvider 用来处理不同的 Authentication 对象的认证。可以看到源码中，增强for循环中就在对不同的AuthenticationProvider执行authenticate方法。
 
-将我们的JwtToken认证工具类注入进来
+AuthenticationProvider也是一个接口，那么他的实现类就是一个抽象类AbstractUserDetailsAuthenticationProvider，其中的authenticate方法不是抽象方法，所以authenticate还是在这执行的，
+这个抽象类有一个抽象方法是retrieveUser，authenticate方法中也调用了他，实现是在继承这个抽象类的是DaoAuthenticationProvider中重写了。
+
+然后会去调用默认的DaoAuthenticationProvider的authenticate方法，这个就是实现了AbstractUserDetailsAuthenticationProvider的默认实现类，
+
+默认的UserDetailService有InMemoryUserDetailManager和JDBCUserDetailManager，他们都是实现了UserDetailsManager这个接口的，而这个接口又是继承了UserDetailService，
+所以我们自定义的重写了loadUserByUsername方法的类就是实现了UserDetailService的实现类，至于怎么获取我们的实现类，下面的config中有写到，因为我们首先加上了@Component注解
+，获取bean，再到DaoAuthenticationProvider中加入该实现类，我们调用setUserDetailsService方法传入我们的UserDetailService实现类就成功了，PasswordEncoder也是如此。
+
+所以实现的流程是
+
+接口： ​ ​ ​ ​   AbstractAuthenticationProcessingFilter ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ​ ->​ ​ ​ ​  ​ ​ ​ ​ ​ AuthenticationManager ​ ​ ​ ​ ​ ->  ​ ​ ​ ​ ​ AbstractUserDetailsAuthenticationProvider -> UserDetailsService
+
+
+
+实现类： UsernamePasswordAuthenticationFilter.authenticate() -> ProviderManager.authenticate() -> DaoUserDetailsService.retrieveUser() -> UserDetailsService.loadUserByUsername()
+
+将我们的JwtToken认证过滤器注入进来
 
     @Configuration
     public class SecurityConfig {
@@ -45,9 +64,21 @@
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
 
+    // @Bean
+    // public AuthenticationManager authenticationManager() throws Exception {
+        // return authenticationConfiguration.getAuthenticationManager();
+    // }
+
+    @Autowired
+    @Qualifier("celebrity")
+    private UserDetailsService celebrityDetailsService;
+
     @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider celebrityDao = new DaoAuthenticationProvider();
+        celebrityDao.setPasswordEncoder(passwordEncoder());
+        celebrityDao.setUserDetailsService(celebrityDetailsService);
+        return new ProviderManager(celebrityDao);
     }
 
     // 将passwordEncoder配置为BCryptPasswordEncoder

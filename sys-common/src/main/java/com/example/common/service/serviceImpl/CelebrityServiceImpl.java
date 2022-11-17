@@ -85,7 +85,7 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         }
         boolean success = update()
                 .set("password", StrUtil.trim(passwordDto.getPassword2()))
-//                .eq("", SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .eq("", SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                 .update();
         if (!success) return Result.error(OPERATE_FAIL);
         return Result.success(OPERATE_SUCCESS);
@@ -95,8 +95,8 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
     @Override
     public Result validate(ValidateDto validateDto) {
         Celebrity celebrity = query()
-//                .eq("account", validateDto.getAccount())
-                .eq("tel", validateDto.getTel())
+                .eq("id", validateDto.getId())
+                .eq("phonenumber", validateDto.getPhonenumber())
                 .one();
         if (celebrity == null) return Result.error("账号或手机号有误！");
         return Result.success(OPERATE_SUCCESS);
