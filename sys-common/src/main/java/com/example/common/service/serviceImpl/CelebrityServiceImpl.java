@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.CelebrityDao;
 import com.example.common.dto.LoginDto;
 import com.example.common.dto.PasswordDto;
-import com.example.common.dto.ValidateDto;
 import com.example.common.entity.Celebrity;
 import com.example.common.entity.LoginCelebrity;
 import com.example.common.response.Result;
@@ -27,8 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.example.common.utils.constant.RedisConstant.CELEBRITY_LOGIN_KEY;
-import static com.example.common.utils.constant.SystemConstant.OPERATE_FAIL;
-import static com.example.common.utils.constant.SystemConstant.OPERATE_SUCCESS;
 
 @Slf4j
 @Service
@@ -77,29 +74,65 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         return null;
     }
 
-    // TODO
     @Override
-    public Result updatePassword(PasswordDto passwordDto) {
-        if (!StrUtil.equals(passwordDto.getPassword1(), passwordDto.getPassword2())) {
+    public Result validatePasswordAndUpdate(PasswordDto passwordDto) {
+        String password1 = passwordDto.getPassword1();
+        String password2 = passwordDto.getPassword2();
+        // 1.后端再次验证密码是否为空
+        if (StrUtil.isBlankIfStr(password1)) {
+            return Result.error("不能输入空密码！");
+        }
+        if (StrUtil.isBlankIfStr(password2)) {
+            return Result.error("不能输入空密码！");
+        }
+        // 2.去除前后空格
+        passwordDto.setPassword1(StrUtil.trim(password1));
+        passwordDto.setPassword2(StrUtil.trim(password2));
+        // 3.判断密码是否一致
+        if (!StrUtil.equals(password1, password2)) {
             return Result.error("两次输入的密码不一致！");
         }
-        boolean success = update()
-                .set("password", StrUtil.trim(passwordDto.getPassword2()))
-                .eq("", SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                .update();
-        if (!success) return Result.error(OPERATE_FAIL);
-        return Result.success(OPERATE_SUCCESS);
+        // 4.从SecurityContextHolder中获取id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginCelebrity loginCelebrity = (LoginCelebrity) authentication.getPrincipal();
+        Long id = loginCelebrity.getCelebrity().getId();
+        // 5.通过空值判断网红是通过那种方式来修改密码的（如果原密码为空，即忘记原密码）
+        // 5.1.通过手机号验证
+        if (StrUtil.isBlank(passwordDto.getPasswordRaw())) {
+            return updateByPhonenumber(passwordDto, id);
+        }
+        // 5.2.通过原密码验证
+        return updateByRawPassword(passwordDto, id);
     }
 
-    // TODO
-    @Override
-    public Result validate(ValidateDto validateDto) {
-        Celebrity celebrity = query()
-                .eq("id", validateDto.getId())
-                .eq("phonenumber", validateDto.getPhonenumber())
-                .one();
-        if (celebrity == null) return Result.error("账号或手机号有误！");
-        return Result.success(OPERATE_SUCCESS);
+//    @Override
+//    public Result register(RegisterDto registerDto) {
+//        Celebrity celebrity = BeanCopyUtils.copy(registerDto, Celebrity.class);
+//        return Result.test(save(celebrity));
+//    }
+
+    // 先通过原密码验证，再更新
+    public Result updateByRawPassword(PasswordDto passwordDto, Long id) {
+        // 1.查询数据库，判断id，原密码是否匹配
+        boolean success = update()
+                .set("password", passwordDto.getPassword2())
+                .eq("id", id)
+                .eq("password", passwordDto.getPasswordRaw())
+                .update();
+        if (!success) return Result.error("原密码错误！");
+        return Result.success();
+    }
+
+    // 先通过手机号验证，再更新
+    public Result updateByPhonenumber(PasswordDto passwordDto, Long id) {
+        // 1.查询数据库，判断信息是否匹配
+        boolean success = update()
+                .set("password", passwordDto.getPassword2())
+                .eq("id", id)
+                .eq("phonenumber", passwordDto.getPhonenumber())
+                .update();
+        if (!success) return Result.error("手机号有误！");
+        return null;
     }
 
     // TODO

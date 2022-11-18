@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PasswordDto {
+    private String phonenumber;
+    private String tel;
+    private String passwordRaw;
     private String password1;
     private String password2;
 }
