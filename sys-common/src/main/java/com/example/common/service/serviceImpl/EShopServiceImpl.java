@@ -4,6 +4,8 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.EShopDao;
 import com.example.common.dto.LoginDto;
+import com.example.common.dto.RegisterDto;
+import com.example.common.entity.Celebrity;
 import com.example.common.entity.EShop;
 import com.example.common.entity.LoginEShop;
 import com.example.common.response.Result;
@@ -18,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.example.common.utils.constant.RedisConstant.ESHOP_LOGIN_KEY;
@@ -64,4 +67,18 @@ public class EShopServiceImpl extends ServiceImpl<EShopDao, EShop> implements ES
         redisCache.removeCache(ESHOP_LOGIN_KEY + id);
         return null;
     }
+
+    @Override
+    public Result register(RegisterDto registerDto) {
+        EShop copy=BeanCopyUtils.copy(registerDto, EShop.class);
+        encryptPassword(copy);
+        return Result.success(save(copy));
+    }
+
+    private void encryptPassword(EShop eShop){
+        String password = eShop.getPassword();
+        password = new BCryptPasswordEncoder().encode(password);
+        eShop.setPassword(password);
+    }
+
 }

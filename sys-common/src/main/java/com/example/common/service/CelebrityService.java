@@ -3,6 +3,7 @@ package com.example.common.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.common.dto.LoginDto;
 import com.example.common.dto.PasswordDto;
+import com.example.common.dto.RegisterDto;
 import com.example.common.dto.ValidateDto;
 import com.example.common.entity.Celebrity;
 import com.example.common.response.Result;
@@ -21,4 +22,6 @@ public interface CelebrityService extends IService<Celebrity> {
     Result updateAvatar(MultipartFile avatar);
 
     Result logout();
+
+    Result Register(RegisterDto registerDto);
 }

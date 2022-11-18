@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.CelebrityDao;
 import com.example.common.dto.LoginDto;
 import com.example.common.dto.PasswordDto;
+import com.example.common.dto.RegisterDto;
 import com.example.common.dto.ValidateDto;
 import com.example.common.entity.Celebrity;
 import com.example.common.entity.LoginCelebrity;
@@ -23,6 +24,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,6 +79,20 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         return null;
     }
 
+    @Override
+    public Result Register(RegisterDto registerDto) {
+        Celebrity copy = BeanCopyUtils.copy(registerDto, Celebrity.class);
+        //加密
+        encryptPassword(copy);
+        return Result.success(save(copy));
+    }
+
+
+    private void encryptPassword(Celebrity celebrity){
+        String password = celebrity.getPassword();
+        password = new BCryptPasswordEncoder().encode(password);
+        celebrity.setPassword(password);
+    }
     // TODO
     @Override
     public Result updatePassword(PasswordDto passwordDto) {
