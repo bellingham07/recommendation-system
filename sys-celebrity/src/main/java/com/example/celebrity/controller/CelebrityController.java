@@ -2,6 +2,7 @@ package com.example.celebrity.controller;
 
 import com.example.common.dto.LoginDto;
 import com.example.common.dto.PasswordDto;
+import com.example.common.dto.RegisterDto;
 import com.example.common.response.Result;
 import com.example.common.service.CelebrityService;
 import io.swagger.annotations.Api;
@@ -31,8 +32,8 @@ public class CelebrityController {
         return celebrityService.validatePasswordAndUpdate(passwordDto);
     }
 
-//    @PostMapping("register")
-//    public Result register(RegisterDto registerDto) {
-//        return celebrityService.register(registerDto);
-//    }
+    @PostMapping("register")
+    public Result register(RegisterDto registerDto) {
+        return celebrityService.register(registerDto);
+    }
 }

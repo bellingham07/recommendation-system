@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.dao.CelebrityDao;
 import com.example.common.dto.LoginDto;
 import com.example.common.dto.PasswordDto;
+import com.example.common.dto.RegisterDto;
 import com.example.common.entity.Celebrity;
 import com.example.common.entity.LoginCelebrity;
 import com.example.common.response.Result;
@@ -105,11 +106,11 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         return updateByRawPassword(passwordDto, id);
     }
 
-//    @Override
-//    public Result register(RegisterDto registerDto) {
-//        Celebrity celebrity = BeanCopyUtils.copy(registerDto, Celebrity.class);
-//        return Result.test(save(celebrity));
-//    }
+    @Override
+    public Result register(RegisterDto registerDto) {
+        Celebrity celebrity = BeanCopyUtils.copy(registerDto, Celebrity.class);
+        return Result.test(save(celebrity));
+    }
 
     // 先通过原密码验证，再更新
     public Result updateByRawPassword(PasswordDto passwordDto, Long id) {
