@@ -1,5 +1,6 @@
 package com.example.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.models.auth.In;
@@ -27,4 +28,11 @@ public class Address implements Serializable {
     private String detail; //详细地址
     private String type;
     private String post;
+
+    @TableField(exist = false)
+    private String redisFlag;
+
+    public Address(String redisFlag) {
+        this.redisFlag = redisFlag;
+    }
 }

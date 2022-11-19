@@ -2,6 +2,7 @@ package com.example.common.utils.cache;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -45,6 +46,14 @@ public class RedisCache {
         stringRedisTemplate.expire(key, time, unit);
     }
 
+    public void setMapCache(String key, Object field, Object data) {
+        stringRedisTemplate.opsForHash().put(key, field, JSONUtil.toJsonStr(data));
+    }
+
+    public <T> void setZSetCache(String key, T value, Double score) {
+        stringRedisTemplate.opsForZSet().add(key, JSONUtil.toJsonStr(value), score);
+    }
+
     // 获取string cache
     public String getCache(String key) {
         return stringRedisTemplate.opsForValue().get(key);
@@ -55,6 +64,9 @@ public class RedisCache {
         return stringRedisTemplate.opsForHash().entries(key);
     }
 
+    public String getMapCache(String key, Long id) {
+        return StrUtil.toString(stringRedisTemplate.opsForHash().get(key, id)) ;
+    }
     // string带逻辑过期
     public void setWithLogicalExpire(String key, Object value, Long time, TimeUnit unit) {
         // 设置逻辑过期
@@ -72,4 +84,7 @@ public class RedisCache {
     public void removeCache(String key) {
         stringRedisTemplate.delete(key);
     }
+
+
+
 }

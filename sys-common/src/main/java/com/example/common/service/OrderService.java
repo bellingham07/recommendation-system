@@ -7,21 +7,17 @@ import com.example.common.response.Result;
 
 public interface OrderService extends IService<Order> {
 
-    Result buy(Long id);
+    Result buy(OrderDto id);
 
-    Result save2cart(Long goodId);
+    Result save2cart(OrderDto goodId);
 
-    Result listOrders(Integer status);
+    Result listOrders(Integer status, Integer belong);
 
-    Result makeOrder(OrderDto orderDto);
-
-    Result cancelByC(Long id);
-
-    Result cancelByE(Long id);
+    Result cancel(Long id);
 
     Result consignCheck(Long id);
 
-    Result takeCheck(Long id);
+    Result receiveCheck(Long id);
 
     Result removeBatch();
 
@@ -30,4 +26,6 @@ public interface OrderService extends IService<Order> {
     Result refundApprove(Long id);
 
     Result refundRefuse(Long id);
+
+    Result get1(Long id);
 }

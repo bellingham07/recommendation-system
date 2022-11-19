@@ -30,7 +30,7 @@ public class AddressController {
     // 获取单条
     @GetMapping("{id}")
     public Result getOne(@PathVariable("id") Long id) {
-        return Result.test(addressService.getById(id));
+        return addressService.get1(id);
     }
 
     // TODO 更新地址

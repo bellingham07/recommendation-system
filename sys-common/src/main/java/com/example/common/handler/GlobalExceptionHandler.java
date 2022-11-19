@@ -12,13 +12,13 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public Result sysExceptionHandler(SystemException e) {
-        if (e.getMessage().contains("phonenumber")) {
-            String[] split = e.getMessage().split(" ");
-            String msg = split[2] + "已存在!";
-            return Result.error(msg);
-        }
-        return Result.error("等会再解决");
-    }
+//    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+//    public Result sysExceptionHandler(SystemException e) {
+//        if (e.getMessage().contains("phonenumber")) {
+//            String[] split = e.getMessage().split(" ");
+//            String msg = split[2] + "已存在!";
+//            return Result.error(msg);
+//        }
+//        return Result.error("等会再解决");
+//    }
 }

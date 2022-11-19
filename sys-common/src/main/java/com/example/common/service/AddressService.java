@@ -12,4 +12,6 @@ public interface AddressService extends IService<Address> {
     Result listAddress();
 
     Result update(AddressDto addressDto);
+
+    Result get1(Long id);
 }

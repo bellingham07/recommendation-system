@@ -19,7 +19,7 @@ public class Good implements Serializable {
     private String name;
     private String brand;
     private String img;
-    private Long category;
+    private String category; // 轻度冗余，减少查库
     private Long eshop;
     private Double marketPrice;
     private Double celebrityPrice;

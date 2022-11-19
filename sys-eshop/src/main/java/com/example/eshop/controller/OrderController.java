@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.common.utils.constant.SystemConstant.BELONG_CELEBRITY;
+
 @Controller
 @RequestMapping("order")
 public class OrderController {
@@ -16,7 +18,7 @@ public class OrderController {
     // TODO 获取订单列表（根据状态）
     @GetMapping("list/{status}")
     public Result list(@PathVariable("status") Integer status) {
-        return orderService.listOrders(status);
+        return orderService.listOrders(status, BELONG_CELEBRITY);
     }
 
     // TODO 获取单条
@@ -28,7 +30,7 @@ public class OrderController {
     // 取消订单
     @PutMapping("operate/{id}")
     public Result cancel(@PathVariable("id") Long id) {
-        return orderService.cancelByE(id);
+        return orderService.cancel(id);
     }
 
     // TODO 发货

@@ -1,5 +1,6 @@
 package com.example.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -22,15 +23,25 @@ public class Order implements Serializable {
     private Long receiveAddress; // 收货地址id
     private Long good; // 商品
     private String remark; // 订单备注
-    private Integer type; // 支付方式
+    private String type; // 支付方式
     private String createTime;
-    private String payTime; // 支付时间
     private String consignmentTime; // 发货时间
     private String doneTime; // 收货时间
+    private String consignee; // 轻度冗余，减少查库
+    private String consignor; // 轻度冗余，减少查库
 
     /**
-     * 状态：C加入购物车0，C下单未支付1，C支付E未发货2，E发货3，C完成收货即完成订单4，C退款5，E确认退款6，C/E取消-1
+     * 状态：C加入购物车0，C下单并支付1（C可退款，E可直接取消），E发货2（C可退款），
+     * C完成收货即完成订单3（C可退款），C发起退款4，E确认退款5，E取消6
      */
     private Integer status;
     private Integer preStatus; // 退款时的状态
+
+
+    @TableField(exist = false)
+    private String redisFlag;
+
+    public Order(String redisFlag) {
+        this.redisFlag = redisFlag;
+    }
 }

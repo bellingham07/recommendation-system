@@ -15,6 +15,7 @@ import com.example.common.utils.JwtUtil;
 import com.example.common.utils.bean.BeanCopyUtils;
 import com.example.common.utils.cache.RedisCache;
 import com.example.common.utils.oss.OssUtil;
+import com.example.common.utils.regex.RegexUtils;
 import com.example.common.vo.UserInfoVo;
 import com.example.common.vo.UserLoginVo;
 import lombok.extern.slf4j.Slf4j;
@@ -106,12 +107,6 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
         return updateByRawPassword(passwordDto, id);
     }
 
-    @Override
-    public Result register(RegisterDto registerDto) {
-        Celebrity celebrity = BeanCopyUtils.copy(registerDto, Celebrity.class);
-        return Result.test(save(celebrity));
-    }
-
     // 先通过原密码验证，再更新
     public Result updateByRawPassword(PasswordDto passwordDto, Long id) {
         // 1.查询数据库，判断id，原密码是否匹配
@@ -134,6 +129,15 @@ public class CelebrityServiceImpl extends ServiceImpl<CelebrityDao, Celebrity> i
                 .update();
         if (!success) return Result.error("手机号有误！");
         return null;
+    }
+
+    @Override
+    public Result register(RegisterDto registerDto) {
+        Celebrity celebrity = BeanCopyUtils.copy(registerDto, Celebrity.class);
+        if (RegexUtils.isPhoneInvalid(celebrity.getPhonenumber())) {
+            return Result.error("请输入正确手机号！");
+        }
+        return Result.test(save(celebrity));
     }
 
     // TODO
